@@ -1,6 +1,6 @@
 # Ignore everything in this Backend folder to prevent uploading any ASP.NET Web API project files
 # Keep this .gitignore tracked
-*
+
 !.gitignore
 
 # Visual Studio / build artifacts

@@ -1,0 +1,4 @@
+When working with JWT, the payload will be stored in Claim datatype, with list form like thid
+var claims = new List<Claim>{
+	new Claim(ClaimTypes.Email, user.email.ToString());
+}

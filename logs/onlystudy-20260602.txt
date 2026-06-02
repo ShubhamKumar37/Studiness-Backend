@@ -1,0 +1,13 @@
+[2026-06-02 23:41:49 INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\sk981\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2026-06-02 23:41:50 INF] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7115
+[2026-06-02 23:41:50 INF] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5228
+[2026-06-02 23:41:50 INF] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+[2026-06-02 23:41:50 INF] Microsoft.Hosting.Lifetime: Hosting environment: Development
+[2026-06-02 23:41:50 INF] Microsoft.Hosting.Lifetime: Content root path: D:\Full_Stack_Projects\Studiness\Backend\Backend
+[2026-06-02 23:43:02 INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\sk981\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2026-06-02 23:43:02 INF] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7115
+[2026-06-02 23:43:02 INF] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5228
+[2026-06-02 23:43:02 INF] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+[2026-06-02 23:43:02 INF] Microsoft.Hosting.Lifetime: Hosting environment: Development
+[2026-06-02 23:43:02 INF] Microsoft.Hosting.Lifetime: Content root path: D:\Full_Stack_Projects\Studiness\Backend\Backend
+[2026-06-02 23:43:28 INF] Microsoft.Hosting.Lifetime: Application is shutting down...
