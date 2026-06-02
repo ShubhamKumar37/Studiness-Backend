@@ -1,0 +1,75 @@
+# Ignore everything in this Backend folder to prevent uploading any ASP.NET Web API project files
+# Keep this .gitignore tracked
+*
+!.gitignore
+
+# Visual Studio / build artifacts
+bin/
+obj/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio workspace
+.vs/
+
+# Publish output
+publish/
+_PublishedWebsites/
+wwwroot/
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Runtime files
+*.dll
+*.exe
+*.pdb
+*.app
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.mdf
+*.ldf
+
+# IIS Express
+**/IISExpress/*
+iisexpress/*
+
+# User secrets and sensitive files
+appsettings.json
+appsettings.*.json
+secrets.json
+*.key
+*.pem
+*.pfx
+
+# Environment files
+.env
+.env.*
+
+# Dotnet tools and cache
+dotnet-tools.json
+~$*
+
+# Node modules if present
+node_modules/
+
+# Rider IDE
+.idea/
+
+# Ignore any publish and deployment artifacts
+*.publish.xml
+*.zip
