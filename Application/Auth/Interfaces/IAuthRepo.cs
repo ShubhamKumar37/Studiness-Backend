@@ -1,6 +1,6 @@
-﻿using Backend.Dto;
+﻿using Backend.Application.Auth.DTOs;
 using Backend.Models;
-namespace Backend.Repositories.Interfaces
+namespace Backend.Application.Auth.Interfaces
 {
     public interface IAuthRepo
     {

@@ -1,8 +1,10 @@
-﻿using Backend.Data;
-using Backend.Repositories.Implmentations;
-using Backend.Repositories.Interfaces;
-using Backend.Services.Implementations;
-using Backend.Services.Interfaces;
+﻿using Backend.Application.Auth.Interfaces;
+using Backend.Application.Auth.Repositories;
+using Backend.Application.Auth.Services;
+using Backend.Application.Course.Interfaces;
+using Backend.Application.Course.Repositories;
+using Backend.Application.Course.Services;
+using Backend.Data;
 using Backend.Settings;
 using Backend.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

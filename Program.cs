@@ -1,7 +1,7 @@
-using Backend.Middlewares;
 using Microsoft.AspNetCore.Http.Features;
 using Backend.Extensions;
 using Serilog;
+using Backend.logs;
 
 namespace Backend
 {

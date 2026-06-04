@@ -2,3 +2,12 @@ When working with JWT, the payload will be stored in Claim datatype, with list f
 var claims = new List<Claim>{
 	new Claim(ClaimTypes.Email, user.email.ToString());
 }
+
+use BaseEntity class which consist of all the common field like id, createdAt, ExpireAt, UpdatedAt this can reduce the size of 
+any entity and we don't have to worry about those stuff anymore.
+
+for DTOs use record instead of class as 
+1 they have less boiler plate code.
+2 they are immutable by nature.
+3 if we compare them then the comparision will based on values not reference which happens in class
+4 records are very maintainable

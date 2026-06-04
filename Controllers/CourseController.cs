@@ -1,7 +1,7 @@
-﻿using Backend.Dto;
+﻿using Backend.Application.Course.DTOs;
+using Backend.Application.Course.Interfaces;
 using Backend.Exceptions;
 using Backend.Models;
-using Backend.Services.Interfaces;
 using Backend.Shared.Responses;
 using Backend.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -46,13 +46,12 @@ namespace Backend.Controllers
             Course? course = await _courseService.GetCourseById(id);
             if (course == null) throw new NotFoundException("Course Not found");
 
-            CourseDto cd = new()
-            {
-                Name = course.Name,
-                Price = course.Price,
-                Description = course.Description,
-                CreateAt = course.CreatedAt
-            };
+            CourseDto cd = new CourseDto(
+                course.Name,
+                course.Description,
+                course.Price,
+                course.CreatedAt
+            );
             return Ok(ApiResponse<CourseDto>.Ok(cd, "Course fetched"));
         }
         [HttpGet("get")]

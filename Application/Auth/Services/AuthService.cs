@@ -1,7 +1,4 @@
-﻿using Backend.Dto;
-using Backend.Models;
-using Backend.Repositories.Interfaces;
-using Backend.Services.Interfaces;
+﻿using Backend.Models;
 using Backend.Utils;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +7,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Backend.Exceptions;
+using Backend.Application.Auth.Interfaces;
+using Backend.Application.Auth.DTOs;
 
-namespace Backend.Services.Implementations
+namespace Backend.Application.Auth.Services
 {
     public class AuthService : IAuthService
     {
@@ -58,7 +57,6 @@ namespace Backend.Services.Implementations
             if (userExist != null) throw new NotFoundException("User Already Exist");
 
             var otpExist = await _iAuthRepo.GetOtp(ucd.Email);
-            _iLogger.LogInformation($"{otpExist.Email} now - {DateTime.UtcNow} {otpExist.ExpireAt}");
             if (otpExist == null || otpExist.ExpireAt < DateTime.UtcNow) throw new NotFoundException("Otp does not exist");
             if (otpExist.Value != ucd.Otp) throw new BadRequestException("Invalid otp");
 
@@ -66,7 +64,6 @@ namespace Backend.Services.Implementations
             await _iAuthRepo.SaveAsync();
 
             return newUser;
-            
         }
 
         public async Task<string> Login(UserLoginDto uld)

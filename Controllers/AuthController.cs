@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
-using Backend.Dto;
-using Backend.Services.Interfaces;
 using Backend.Utils;
 using Backend.Settings;
 using System.ComponentModel.DataAnnotations;
 using Backend.Shared.Responses;
+using Backend.Application.Auth.Interfaces;
+using Backend.Application.Auth.DTOs;
 
 
 namespace Backend.Controllers
@@ -16,7 +16,6 @@ namespace Backend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly SendMail _sendMail;
 
         public AuthController(IAuthService authservice)
         {

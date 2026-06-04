@@ -1,9 +1,9 @@
-﻿using Backend.Data;
-using Backend.Models;
-using Backend.Repositories.Interfaces;
+﻿using Backend.Application.Course.Interfaces;
+using Backend.Data;
+using BM = Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Repositories.Implmentations
+namespace Backend.Application.Course.Repositories
 {
     public class CourseRepo : ICourseRepo
     {
@@ -13,18 +13,18 @@ namespace Backend.Repositories.Implmentations
         {
             this._context = context;
         }
-        public async Task<Course> CreateCourse(Course course)
+        public async Task<BM.Course?> CreateCourse(BM.Course course)
         {
             await _context.Courses.AddAsync(course);
             return course;
         }
 
-        public async Task<Course?> GetCourseById(int courseId)
+        public async Task<BM.Course?> GetCourseById(int courseId)
         {
             return await _context.Courses.FirstOrDefaultAsync((x) => x.Id == courseId);
         }
 
-        public async Task<List<Course?>> GetCourse(int page, int limit)
+        public async Task<List<BM.Course?>> GetCourse(int page, int limit)
         {
             return await _context.Courses.OrderBy(x => x.Id).Skip((page - 1) * limit).Take(limit).ToListAsync();
         }

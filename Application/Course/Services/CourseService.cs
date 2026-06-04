@@ -1,11 +1,10 @@
-﻿using Backend.Dto;
+﻿using Backend.Application.Course.DTOs;
+using Backend.Application.Course.Interfaces;
 using Backend.Exceptions;
-using Backend.Models;
-using Backend.Repositories.Interfaces;
-using Backend.Services.Interfaces;
+using BM = Backend.Models;
 using CloudinaryDotNet;
 
-namespace Backend.Services.Implementations
+namespace Backend.Application.Course.Services
 {
     public class CourseService : ICourseService
     {
@@ -15,9 +14,9 @@ namespace Backend.Services.Implementations
         {
             this._courseRepo = courseRepo;
         }
-        public async Task<Course> Create(CreateCourseDto ccd, int userId)
+        public async Task<BM.Course> Create(CreateCourseDto ccd, int userId)
         {
-            Course newCourse = new()
+            var newCourse = new BM.Course()
             {
                 Name = ccd.Name,
                 Description = ccd.Description,
@@ -29,14 +28,14 @@ namespace Backend.Services.Implementations
             return newCourse;
         }
 
-        public async Task<List<Course?>> GetCourse(int page, int limit)
+        public async Task<List<BM.Course?>> GetCourse(int page, int limit)
         {
             return await _courseRepo.GetCourse(page, limit);
         }
 
-        public async Task<Course?> GetCourseById(int courseId)
+        public async Task<BM.Course?> GetCourseById(int courseId)
         {
-            Course? courseExist = await _courseRepo.GetCourseById(courseId);
+            BM.Course? courseExist = await _courseRepo.GetCourseById(courseId);
 
 
             return courseExist == null ? throw new NotFoundException("Course not found") : courseExist;

@@ -1,7 +1,7 @@
-﻿using Backend.Dto;
+﻿using Backend.Application.Auth.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
-namespace Backend.Services.Interfaces
+namespace Backend.Application.Auth.Interfaces
 {
     public interface IAuthService
     {

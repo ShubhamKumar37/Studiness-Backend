@@ -1,10 +1,10 @@
-﻿using Backend.Data;
-using Backend.Dto;
+﻿using Backend.Application.Auth.DTOs;
+using Backend.Application.Auth.Interfaces;
+using Backend.Data;
 using Backend.Models;
-using Backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Repositories.Implmentations
+namespace Backend.Application.Auth.Repositories
 {
     public class AuthRepo : IAuthRepo
     {

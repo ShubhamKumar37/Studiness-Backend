@@ -1,11 +1,9 @@
 ﻿namespace Backend.Models
 {
-    public class Otp
+    public class Otp : BaseEntity
     {
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public string Email { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string Value { get; set; } = "999999";
+        public string Email { get; set; } = "Studiness@gmail.com";
         public DateTime ExpireAt { get; set; } = DateTime.UtcNow.AddMinutes(10);
     }
 }

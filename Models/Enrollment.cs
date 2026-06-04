@@ -1,8 +1,7 @@
 ﻿namespace Backend.Models
 {
-    public class Enrollment
+    public class Enrollment : BaseEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public User User { get; set; } = null!;
 
