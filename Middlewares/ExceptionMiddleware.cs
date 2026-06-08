@@ -22,12 +22,12 @@ namespace Backend.Middlewares
             }
             catch(ApiException ex)
             {
-                _iLogger.LogWarning(ex, "Application Exception : {Message}", ex.Message);
+                _iLogger.LogWarning(ex, "Application Exception : {Message}\n Stack Trace : {StackTrace}", ex.Message, ex.StackTrace);
                 await HandleException(context, ex, ex.StatusCode);
             }
             catch (Exception ex)
             {
-                _iLogger.LogWarning(ex, "Application Exception: {Message}", ex.Message);
+                _iLogger.LogWarning(ex, "Application Exception: {Message}\n Stack Trace : {StackTrace}", ex.Message, ex.StackTrace);
                 await HandleException(context, ex, 500);
             }
         }

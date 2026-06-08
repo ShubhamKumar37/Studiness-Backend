@@ -24,7 +24,7 @@ namespace Backend.Application.Course.Repositories
             return await _context.Courses.FirstOrDefaultAsync((x) => x.Id == courseId);
         }
 
-        public async Task<List<BM.Course?>> GetCourse(int page, int limit)
+        public async Task<List<BM.Course?>?> GetCourse(int page, int limit)
         {
             return await _context.Courses.OrderBy(x => x.Id).Skip((page - 1) * limit).Take(limit).ToListAsync();
         }

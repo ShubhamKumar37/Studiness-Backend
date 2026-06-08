@@ -4,6 +4,9 @@ using Backend.Application.Auth.Services;
 using Backend.Application.Course.Interfaces;
 using Backend.Application.Course.Repositories;
 using Backend.Application.Course.Services;
+using Backend.Application.CourseSection.Interfaces;
+using Backend.Application.CourseSection.Repositories;
+using Backend.Application.CourseSection.Services;
 using Backend.Data;
 using Backend.Settings;
 using Backend.Utils;
@@ -22,9 +25,11 @@ namespace Backend.Extensions
             services.AddScoped<SendMail>();
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ICourseRepo, CourseRepo>();
+            services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ICloudinaryUtils, CloudinaryUtils>();
+            services.AddScoped<ICourseSectionRepo, CourseSectionRepo>();
+            services.AddScoped<ICourseSectionService, CourseSectionService>();
 
             return services;
         }
