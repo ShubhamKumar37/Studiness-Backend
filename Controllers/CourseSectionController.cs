@@ -1,8 +1,8 @@
 ﻿using Backend.Application.Course.Interfaces;
 using Backend.Application.CourseSection.DTOs;
+using Backend.Application.CourseSection.Interfaces;
 using Backend.Models;
 using Backend.Shared.Responses;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -12,37 +12,62 @@ namespace Backend.Controllers
     public class CourseSectionController : ControllerBase
     {
         private readonly ICourseService _courseService;
+        private readonly ICourseSectionService _courseSectionService;
 
-        public CourseSectionController(ICourseService courseService)
+        public CourseSectionController(ICourseService courseService, ICourseSectionService courseSectionService)
         {
             this._courseService = courseService;
+            this._courseSectionService = courseSectionService;
         }
 
 
         [HttpPost("add-section/{id}")]
-        public IActionResult AddSection([FromQuery] int id, NewCourseSection ncs)
+        public async Task<IActionResult> AddSection([FromQuery] int courseId, NewCourseSection ncs)
         {
+            Section tempSection = new()
+            {
+                Name = ncs.Name,
+                CourseId = ncs.CourseId
+            };
 
-            return Ok(ApiResponse.Ok("New Section Added"));
+            Section newSection = await _courseSectionService.AddCourseSection(courseId, tempSection);
+            CourseSectionDto response = new(newSection.Id, newSection.Name, courseId);
+
+            return Ok(ApiResponse<CourseSectionDto>.Ok(response,"New Section Added"));
         }
         [HttpGet("/{id}")]
-        public IActionResult GetSections([FromQuery] int id)
+        public async Task<IActionResult> GetSections([FromQuery] int courseId)
         {
-            //return Ok(ApiResponse.Ok<List<Section>>("All Section fetched", ));
-            return Ok(id);
+            List<Section> sections = await _courseSectionService.GetCourseSections(courseId);
+            List<CourseSectionDto> allSections = new();
+
+            foreach(var i in sections) allSections.Add(new(i.Id, i.Name, i.CourseId));
+
+            return Ok(ApiResponse<List<CourseSectionDto>>.Ok(allSections, "All section fetched"));
+            
         }
 
         [HttpPut("/{id}")]
-        public IActionResult UpdateSection([FromQuery] int id, [FromBody] NewCourseSection ncs)
+        public async Task<IActionResult> UpdateSection([FromQuery] int id, [FromBody] NewCourseSection ncs)
         {
-            return Ok();
+            Section tempSection = new()
+            {
+                Id = id,
+                Name = ncs.Name,
+                CourseId = ncs.CourseId
+            };
+
+            Section updatedSection = await _courseSectionService.UpdateCourseSection(tempSection);
+            CourseSectionDto response = new(updatedSection.Id, updatedSection.Name, updatedSection.CourseId);
+
+            return Ok(ApiResponse<CourseSectionDto>.Ok(response, "Section updated successfully"));
         }
 
         [HttpDelete("/{id}")]
         public async Task<IActionResult> DeleteSection([FromQuery] int id)
         {
-            
-            return Ok();
+            await _courseSectionService.DeleteCourseSection(id);
+            return Ok(ApiResponse.Ok("Section deleted successfully"));
         }
     }
 }
