@@ -5,6 +5,7 @@ namespace Backend.Application.CourseSection.Interfaces
     public interface ICourseSectionService
     {
         Task<Section> AddCourseSection(int id, Section ncs);
+        Task AddCourseSectionAttachment(int id, IFormFile file);
         Task<Section> GetCourseSection(int id);
         Task<List<Section>> GetCourseSections(int couresId);
         Task<Section> UpdateCourseSection(Section section);

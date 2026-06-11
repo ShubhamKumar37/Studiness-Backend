@@ -10,4 +10,9 @@
         string Name,
         int CourseId
     );
+    public record UploadResultDto(
+        string Url,
+        string PublicId
+    );
+
 }

@@ -21,7 +21,7 @@ namespace Backend.Controllers
         }
 
 
-        [HttpPost("add-section/{id}")]
+        [HttpPost("add-section/{courseId}")]
         public async Task<IActionResult> AddSection([FromQuery] int courseId, NewCourseSection ncs)
         {
             Section tempSection = new()
@@ -35,6 +35,15 @@ namespace Backend.Controllers
 
             return Ok(ApiResponse<CourseSectionDto>.Ok(response,"New Section Added"));
         }
+
+        [HttpPost("add-section-attachment/{id}")]
+        public async Task<IActionResult> AddSectionAttachment([FromQuery] int id, [FromForm] IFormFile file)
+        {
+            await _courseSectionService.AddCourseSectionAttachment(id, file);
+
+            return Ok(ApiResponse.Ok("Attachment added successfully"));
+        }
+
         [HttpGet("/{id}")]
         public async Task<IActionResult> GetSections([FromQuery] int courseId)
         {

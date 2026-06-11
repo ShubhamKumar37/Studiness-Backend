@@ -24,5 +24,10 @@
 
         public static ApiResponse Fail(IEnumerable<string>? errors, string message = "")
             => new() { Success = false, Message = message, Errors = errors };
+
+        internal static object? Ok<T>(T response, string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

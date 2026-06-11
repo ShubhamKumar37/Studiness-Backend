@@ -4,10 +4,11 @@ namespace Backend.Application.CourseSection.Interfaces
 {
     public interface ICourseSectionRepo
     {
-        Task<Section> AddSection(Section section);
-        Task<Section> GetSectionById(int id);
+        Task AddSection(Section section);
+        Task AddAttachment(Attachment attachment);
+        Task<Section?> GetSectionById(int id);
         Task<List<Section>> GetSections(int courseId);
-        Task<Section> UpdateSection(Section section);
-        Task DeleteSection(int id);
+        Task UpdateSection(Section section);
+        Task DeleteSection(Section section);
     }
 }

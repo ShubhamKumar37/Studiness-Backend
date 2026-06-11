@@ -2,6 +2,7 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
+using Backend.Application.CourseSection.DTOs;
 
 namespace Backend.Utils
 {
@@ -48,11 +49,7 @@ namespace Backend.Utils
             if (result.Error != null)
                 throw new Exception(result.Error.Message);
 
-            return new UploadResultDto
-            {
-                Url = result.SecureUrl.ToString(),
-                PublicId = result.PublicId
-            };
+            return new UploadResultDto(result.SecureUrl.ToString(), result.PublicId);
         }
 
         public async Task<bool> DeleteFile(string publicId, bool flag)
@@ -71,9 +68,5 @@ namespace Backend.Utils
         }
     }
 
-    public class UploadResultDto
-    {
-        public string Url { get; set; } = string.Empty;
-        public string PublicId { get; set; } = string.Empty;
-    }
+    
 }
