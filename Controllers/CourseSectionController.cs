@@ -22,7 +22,7 @@ namespace Backend.Controllers
 
 
         [HttpPost("add-section/{courseId}")]
-        public async Task<IActionResult> AddSection([FromQuery] int courseId, NewCourseSection ncs)
+        public async Task<IActionResult> AddSection([FromRoute] int courseId, NewCourseSection ncs)
         {
             Section tempSection = new()
             {
@@ -37,17 +37,17 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add-section-attachment/{id}")]
-        public async Task<IActionResult> AddSectionAttachment([FromQuery] int id, [FromForm] IFormFile file)
+        public async Task<IActionResult> AddSectionAttachment([FromRoute] int id, [FromForm] IFormFile file)
         {
             await _courseSectionService.AddCourseSectionAttachment(id, file);
 
             return Ok(ApiResponse.Ok("Attachment added successfully"));
         }
 
-        [HttpGet("/{id}")]
-        public async Task<IActionResult> GetSections([FromQuery] int courseId)
+        [HttpGet("/{courseId}")]
+        public async Task<IActionResult> GetSections([FromRoute] int courseId, [FromQuery] int page = 1, [FromQuery] int limit = 10)
         {
-            List<Section> sections = await _courseSectionService.GetCourseSections(courseId);
+            List<Section> sections = await _courseSectionService.GetCourseSections(courseId, page, limit);
             List<CourseSectionDto> allSections = new();
 
             foreach(var i in sections) allSections.Add(new(i.Id, i.Name, i.CourseId));
@@ -57,7 +57,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("/{id}")]
-        public async Task<IActionResult> UpdateSection([FromQuery] int id, [FromBody] NewCourseSection ncs)
+        public async Task<IActionResult> UpdateSection([FromRoute] int id, [FromBody] NewCourseSection ncs)
         {
             Section tempSection = new()
             {
@@ -73,7 +73,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("/{id}")]
-        public async Task<IActionResult> DeleteSection([FromQuery] int id)
+        public async Task<IActionResult> DeleteSection([FromRoute] int id)
         {
             await _courseSectionService.DeleteCourseSection(id);
             return Ok(ApiResponse.Ok("Section deleted successfully"));

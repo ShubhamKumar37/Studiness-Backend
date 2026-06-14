@@ -1,6 +1,7 @@
 ﻿using Backend.Application.CourseSection.Interfaces;
 using Backend.Data;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Application.CourseSection.Repositories
 {
@@ -37,9 +38,9 @@ namespace Backend.Application.CourseSection.Repositories
             return section;
         }
 
-        public Task<List<Section>> GetSections(int courseId)
+        public async Task<List<Section>> GetSections(int courseId, int page = 1, int limit = 10)
         {
-            throw new NotImplementedException();
+            return await _context.Sections.Where(x => x.CourseId == courseId).Skip(limit * (page - 1)).Take(limit).ToListAsync();
         }
 
         public Task UpdateSection(Section section)

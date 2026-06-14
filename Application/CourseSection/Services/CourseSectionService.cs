@@ -48,9 +48,9 @@ namespace Backend.Application.CourseSection.Services
             return section;
         }
 
-        public async Task<List<bm.Section>> GetCourseSections(int courseId)
+        public async Task<List<bm.Section>> GetCourseSections(int courseId, int page = 1, int limit = 10)
         {
-            List<bm.Section> sectionList = await _courseSectionRepo.GetSections(courseId);
+            List<bm.Section> sectionList = await _courseSectionRepo.GetSections(courseId, page, limit);
 
             return sectionList;
         }
@@ -58,7 +58,8 @@ namespace Backend.Application.CourseSection.Services
         public async Task<bm.Section> UpdateCourseSection(Section section)
         {
             bm.Section sectionExist = await _courseSectionRepo.GetSectionById(section.Id) ?? throw new ApiException(404, "Section does not exist");
-            await _courseSectionRepo.UpdateSection(section);
+            sectionExist = section;
+            await _courseSectionRepo.SaveContext();
 
             return section;
         }
