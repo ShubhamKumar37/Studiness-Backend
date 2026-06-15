@@ -17,29 +17,28 @@ namespace Backend.Controllers
     {
         private readonly ICourseService _courseService;
         private readonly ICloudinaryUtils _cloudinaryUtil;
+        private readonly ILogger<CourseController> _logger;
 
-        public CourseController(ICourseService courseService, ICloudinaryUtils cloudinaryUtil)
+        public CourseController(ICourseService courseService, ICloudinaryUtils cloudinaryUtil, ILogger<CourseController> logger)
         {
             this._courseService = courseService;
             this._cloudinaryUtil = cloudinaryUtil;
+            this._logger = logger;
         }
 
         [HttpPost("create")]
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateCourseDto ccd)
         {
-            Claim? userId = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userId == null) throw new UnauthorizedAccessException("User id not found in claims");
+            _logger.LogInformation($"{User?.FindFirst(ClaimTypes.Role)?.Value}, {User?.FindFirst(ClaimTypes.NameIdentifier)?.Value}");
+            if (!User.IsInRole("Instructor")) throw new ApiException(401, "You are not authorized to create course");
+            Claim? userId = User.FindFirst(ClaimTypes.NameIdentifier) ?? throw new ApiException(401, "User id not found in claims") ;
 
             await _courseService.Create(ccd, int.Parse(userId.Value));
 
             return Ok(ApiResponse<CreateCourseDto>.Ok(ccd, "Course created successfully"));
         }
-        //[HttpDelete("delete")]
-        //public async Task<IActionResult> Delete()
-        //{
-        //    throw new NotImplementedException();
-        //}
+
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetCourseById(int id)
         {
@@ -63,6 +62,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("upload")]
+        [Authorize(Roles = "Instructor")]
         [RequestSizeLimit(100 * 1024 * 1024)]
         [RequestFormLimits(MultipartBodyLengthLimit = 100 * 1024 * 1024)]
         public async Task<IActionResult> Upload([FromForm] IFormFile file)
@@ -73,6 +73,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> Delete([FromQuery] string publicId, [FromQuery] bool type)
         {
             bool flag = await _cloudinaryUtil.DeleteFile(publicId, type);

@@ -24,13 +24,14 @@ namespace Backend.Application.Auth.Repositories
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task AddOtp(string otp, string email)
+        public async Task AddOtp(Otp newOtp)
         {
-            await _context.Otps.AddAsync(new Otp() { Value = otp, Email = email });
+            await _context.Otps.AddAsync(newOtp);
+            await SaveAsync();
         }
         public async Task<Otp?> GetOtp(string email)
         {
-            return await _context.Otps.FirstOrDefaultAsync(x => x.Email == email);
+            return await _context.Otps.Where(x => x.Email == email).OrderByDescending(x => x.CreatedAt).FirstOrDefaultAsync();
         }
         public async Task<User?> CreateUser(UserCreateDto ucd)
         {
@@ -38,10 +39,11 @@ namespace Backend.Application.Auth.Repositories
             {
                 Name = ucd.Name,
                 Email = ucd.Email,
-                Password = ucd.Password
+                Password = ucd.Password,
+                Role = ucd.Role
             };
             await _context.Users.AddAsync(user);
-
+            await SaveAsync();
             return user;
         }
 

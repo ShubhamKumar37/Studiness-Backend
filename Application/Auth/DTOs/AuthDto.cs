@@ -3,12 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Application.Auth.DTOs
 {
-    public enum Role
-    {
-        Student,
-        Instructor,
-        Admin
-    }
     public record UserCreateDto
     (
         [Required]
@@ -24,7 +18,7 @@ namespace Backend.Application.Auth.DTOs
         
         string Otp, 
         
-        Role Role = Role.Student
+        Role Role = 0
     );
 
     public record UserLoginDto(

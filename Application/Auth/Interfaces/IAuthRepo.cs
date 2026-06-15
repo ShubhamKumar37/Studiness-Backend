@@ -6,7 +6,7 @@ namespace Backend.Application.Auth.Interfaces
     {
         Task<User?> GetUserById(int Id);
         Task<User?> GetUserByEmail(string email);
-        Task AddOtp(string otp, string email);
+        Task AddOtp(Otp otp);
         Task<Otp?> GetOtp(string email);
         Task<User?> CreateUser(UserCreateDto ucd);
         Task SaveAsync();

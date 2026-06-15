@@ -16,6 +16,7 @@ namespace Backend.Application.Course.Repositories
         public async Task<BM.Course?> CreateCourse(BM.Course course)
         {
             await _context.Courses.AddAsync(course);
+            await _context.SaveChangesAsync();
             return course;
         }
 

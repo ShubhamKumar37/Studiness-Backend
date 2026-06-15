@@ -57,11 +57,11 @@ namespace Backend.Application.Auth.Services
             if (userExist != null) throw new NotFoundException("User Already Exist");
 
             var otpExist = await _iAuthRepo.GetOtp(ucd.Email);
+            
             if (otpExist == null || otpExist.ExpireAt < DateTime.UtcNow) throw new NotFoundException("Otp does not exist");
             if (otpExist.Value != ucd.Otp) throw new BadRequestException("Invalid otp");
 
             User? newUser = await _iAuthRepo.CreateUser(ucd);
-            await _iAuthRepo.SaveAsync();
 
             return newUser;
         }
@@ -70,7 +70,6 @@ namespace Backend.Application.Auth.Services
         {
             User? user = await _iAuthRepo.GetUserByEmail(uld.Email);
             if(user == null) throw new NotFoundException("User not found");
-
             if (user.Password != uld.Password) throw new UnauthorizedException("Password Incorrect");
 
             var claims = new List<Claim>
@@ -80,10 +79,7 @@ namespace Backend.Application.Auth.Services
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
-            string token = GenerateAccessToken(claims);
-
-            return token;
-
+            return GenerateAccessToken(claims);
         }
 
         public async Task SendOtp(EmailDto email)
@@ -94,8 +90,13 @@ namespace Backend.Application.Auth.Services
             await _sendMail.MailSender(email.Email, "Otp for signup", $"<h1>{otp}</h1>");
             Console.WriteLine("Mail send successfully");
 
-            await _iAuthRepo.AddOtp(otp, email.Email);
-            await _iAuthRepo.SaveAsync();
+            Otp newOtp = new Otp()
+            {
+                Value = otp,
+                Email = email.Email
+            };
+
+            await _iAuthRepo.AddOtp(newOtp);
         }
     }
 }
