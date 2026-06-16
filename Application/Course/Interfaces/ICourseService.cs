@@ -8,6 +8,7 @@ namespace Backend.Application.Course.Interfaces
         Task<Models.Course> Create(CreateCourseDto ccd, int userId);
         Task<List<Models.Course>> GetCourse(int page, int limit);
         Task<Models.Course> GetCourseById(int id);
-        Task Delete();
+        Task Update(int courseId, int courseOwnerId, CreateCourseDto ccd);
+        
     }
 }

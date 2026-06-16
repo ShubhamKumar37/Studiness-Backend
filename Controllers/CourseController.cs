@@ -30,9 +30,9 @@ namespace Backend.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateCourseDto ccd)
         {
-            _logger.LogInformation($"{User?.FindFirst(ClaimTypes.Role)?.Value}, {User?.FindFirst(ClaimTypes.NameIdentifier)?.Value}");
+            //_logger.LogInformation($"{User?.FindFirst(ClaimTypes.Role)?.Value}, {User?.FindFirst(ClaimTypes.NameIdentifier)?.Value}");
             if (!User.IsInRole("Instructor")) throw new ApiException(401, "You are not authorized to create course");
-            Claim? userId = User.FindFirst(ClaimTypes.NameIdentifier) ?? throw new ApiException(401, "User id not found in claims") ;
+            Claim? userId = User.FindFirst(ClaimTypes.NameIdentifier) ?? throw new ApiException(401, "User id not found in claims");
 
             await _courseService.Create(ccd, int.Parse(userId.Value));
 
@@ -57,9 +57,21 @@ namespace Backend.Controllers
         public async Task<IActionResult> GetCourse([FromQuery] int page = 1, [FromQuery] int limit = 5)
         {
             List<Course?> listCourse = await _courseService.GetCourse(page, limit);
-            
+
             return Ok(ApiResponse<List<Course?>>.Ok(listCourse, "Courses fetched"));
         }
+
+        [HttpPut("update/{courseId}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateCourse([FromRoute] int courseId, [FromBody] CreateCourseDto ccd)
+        {
+            if (!User.IsInRole("Instructor")) throw new ApiException(401, "You are not authorized to update course");
+            int courseOwnerId = int.Parse(User?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            await _courseService.Update(courseId, courseOwnerId, ccd);
+            return Ok(ApiResponse<CreateCourseDto>.Ok(ccd, "Course updated successfully"));
+        }
+
 
         [HttpPut("upload")]
         [Authorize(Roles = "Instructor")]
