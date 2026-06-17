@@ -21,14 +21,14 @@ namespace Backend.Application.CourseSection.Services
             this._cloudinary = cloudinary;
         }
 
-        public async Task<bm.Section> AddCourseSection(int id, bm.Section ncs)
+        public async Task<bm.Section> AddCourseSection(int id, bm.Section ncs, int userId)
         {
             bm.Course courseExist = await _courseRepo.GetCourseById(id) ?? throw new ApiException(404, "Course does not exist");
             await _courseSectionRepo.AddSection(ncs);
             return ncs;
         }
 
-        public async Task AddCourseSectionAttachment(int id, IFormFile file)
+        public async Task AddCourseSectionAttachment(int id, IFormFile file, int userId)
         {
             UploadResultDto urd = await _cloudinary.UploadFile(file);
             Attachment newAttachment = new()
@@ -55,7 +55,7 @@ namespace Backend.Application.CourseSection.Services
             return sectionList;
         }
 
-        public async Task<bm.Section> UpdateCourseSection(Section section)
+        public async Task<bm.Section> UpdateCourseSection(Section section, int userId)
         {
             bm.Section sectionExist = await _courseSectionRepo.GetSectionById(section.Id) ?? throw new ApiException(404, "Section does not exist");
             sectionExist = section;
@@ -64,7 +64,7 @@ namespace Backend.Application.CourseSection.Services
             return section;
         }
 
-        public async Task DeleteCourseSection(int id)
+        public async Task DeleteCourseSection(int id, int userId)
         {
             Section sectionExist = await _courseSectionRepo.GetSectionById(id) ?? throw new ApiException(404, "Section does not exist");
 

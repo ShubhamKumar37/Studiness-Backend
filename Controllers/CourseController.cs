@@ -66,9 +66,9 @@ namespace Backend.Controllers
         public async Task<IActionResult> UpdateCourse([FromRoute] int courseId, [FromBody] CreateCourseDto ccd)
         {
             if (!User.IsInRole("Instructor")) throw new ApiException(401, "You are not authorized to update course");
-            int courseOwnerId = int.Parse(User?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int userId = int.Parse(User?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            await _courseService.Update(courseId, courseOwnerId, ccd);
+            await _courseService.Update(courseId, userId, ccd);
             return Ok(ApiResponse<CreateCourseDto>.Ok(ccd, "Course updated successfully"));
         }
 

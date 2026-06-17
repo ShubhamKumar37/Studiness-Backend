@@ -40,12 +40,12 @@ namespace Backend.Application.Course.Services
             BM.Course? courseExist = await _courseRepo.GetCourseById(courseId) ?? throw new ApiException(404, "Course not found");
             return courseExist;
         }
-        public async Task Update(int courseId, int courseOwnerId, CreateCourseDto ccd)
+        public async Task Update(int courseId, int userId, CreateCourseDto ccd)
         {
-            _iLogger.LogInformation($"This is the course id - {courseId} and the owner id is - {courseOwnerId}");
+            _iLogger.LogInformation($"This is the course id - {courseId} and the owner id is - {userId}");
             BM.Course? courseExist = await _courseRepo.GetCourseById(courseId) ?? throw new ApiException(404, "Course not found");
 
-            if (courseExist.UserId != courseOwnerId) throw new ApiException(401, "You are not the owner of course");
+            if (courseExist.UserId != userId) throw new ApiException(401, "You are not the owner of course");
 
             courseExist.Name = ccd.Name;
             courseExist.Description = ccd.Description;
