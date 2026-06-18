@@ -34,7 +34,7 @@ namespace Backend.Controllers
             Section tempSection = new()
             {
                 Name = ncs.Name,
-                CourseId = ncs.CourseId
+                CourseId = courseId
             };
 
             Section newSection = await _courseSectionService.AddCourseSection(courseId, tempSection, userId);

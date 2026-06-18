@@ -1,7 +1,7 @@
 ﻿using Backend.Application.Course.DTOs;
 using Backend.Application.Course.Interfaces;
 using Backend.Exceptions;
-using BM = Backend.Models;
+using bm = Backend.Models;
 using CloudinaryDotNet;
 
 namespace Backend.Application.Course.Services
@@ -16,9 +16,9 @@ namespace Backend.Application.Course.Services
             this._courseRepo = courseRepo;
             this._iLogger = iLogger;
         }
-        public async Task<BM.Course> Create(CreateCourseDto ccd, int userId)
+        public async Task<bm.Course> Create(CreateCourseDto ccd, int userId)
         {
-            var newCourse = new BM.Course()
+            var newCourse = new bm.Course()
             {
                 Name = ccd.Name,
                 Description = ccd.Description,
@@ -30,20 +30,20 @@ namespace Backend.Application.Course.Services
             return newCourse;
         }
 
-        public async Task<List<BM.Course>> GetCourse(int page, int limit)
+        public async Task<List<bm.Course>> GetCourse(int page, int limit)
         {
             return await _courseRepo.GetCourse(page, limit);
         }
 
-        public async Task<BM.Course?> GetCourseById(int courseId)
+        public async Task<bm.Course?> GetCourseById(int courseId)
         {
-            BM.Course? courseExist = await _courseRepo.GetCourseById(courseId) ?? throw new ApiException(404, "Course not found");
+            bm.Course? courseExist = await _courseRepo.GetCourseById(courseId) ?? throw new ApiException(404, "Course not found");
             return courseExist;
         }
         public async Task Update(int courseId, int userId, CreateCourseDto ccd)
         {
             _iLogger.LogInformation($"This is the course id - {courseId} and the owner id is - {userId}");
-            BM.Course? courseExist = await _courseRepo.GetCourseById(courseId) ?? throw new ApiException(404, "Course not found");
+            bm.Course? courseExist = await _courseRepo.GetCourseById(courseId) ?? throw new ApiException(404, "Course not found");
 
             if (courseExist.UserId != userId) throw new ApiException(401, "You are not the owner of course");
 
